@@ -4,7 +4,7 @@ var config = {
 	root: root,
 
 	time: 'day',
-	default_map: 'OlivineCity',
+	default_map: 'ValenciaIsland',
 
 	asm_dir:            root + 'maps/',
 	ow_dir:             root + 'gfx/overworld/',
@@ -14,8 +14,7 @@ var config = {
 	map_constants_path: root + 'constants/map_constants.asm',
 	map_dimensions_path: root + 'constants/map_constants.asm',
 
-	roofs: [ -1, 3, 2, -1, 1, 2, -1, -1, 2, 2, 1, 4, -1, -1, -1, -1, -1, -1, -1, 0, -1, -1, 3, -1, 0, -1, 0 ],
-	//roof_permissions: [ 1, 'TOWN', 2, 'ROUTE', 4, 'CAVE' ], // wrong, see roof_tilesets
+	roofs: [ -1, 4, 2, -1, 3, 4, -1, -1, 2, 2, 1, 0, 0 ],
 	roof_tilesets: [
 		1, 'TILESET_JOHTO_1',
 		2, 'TILESET_JOHTO_2',
@@ -128,48 +127,41 @@ var config = {
 
 	// not hardcoding these means reading code
 	movement_facings: [
-		0,
-		0, // standing
-		0, // random_walk_xy
-		0, // slow random spin
-		0, // random walk y
-		0, // random walk x
-		0, // standing down
-		4, // standing up
-		8, // standing left
-		12, // standing right
-		0, // fast random spin
-		0, // obey dpad (player)
-		0, // 8 unknown
-		0, // 9 unknown
-		0, // a unknown
-		0, // b unknown
-		0, // c unknown
-		0, // d unknown
-		0, // e unknown
-		0, // follow
-		0, // scripted?
-		23, // snorlax
-		0, // bounce?
-		0, // standing // sudowoodo
-		0, // standing // rock
-		0, // boulder
-		0, // follownotexact
-		0, // shadow
-		0, // emote
-		0,
-		0,
-		0,
-		22,
+		0, // SPRITEMOVEDATA_00
+		0, // SPRITEMOVEDATA_ITEM_TREE
+		0, // SPRITEMOVEDATA_WANDER
+		0, // SPRITEMOVEDATA_SPINRANDOM_SLOW
+		0, // SPRITEMOVEDATA_WALK_UP_DOWN
+		0, // SPRITEMOVEDATA_WALK_LEFT_RIGHT
+		0, // SPRITEMOVEDATA_STANDING_DOWN
+		4, // SPRITEMOVEDATA_STANDING_UP
+		8, // SPRITEMOVEDATA_STANDING_LEFT
+		12, // SPRITEMOVEDATA_STANDING_RIGHT
+		0, // SPRITEMOVEDATA_SPINRANDOM_FAST
+		0, // SPRITEMOVEDATA_PLAYER
+		0, // SPRITEMOVEDATA_FOLLOWING
+		0, // SPRITEMOVEDATA_SCRIPTED
+		23, // SPRITEMOVEDATA_SNORLAX
+		0, // SPRITEMOVEDATA_POKEMON
+		0, // SPRITEMOVEDATA_MIME__JR
+		0, // SPRITEMOVEDATA_SMASHABLE_ROCK
+		0, // SPRITEMOVEDATA_STRENGTH_BOULDER
+		0, // SPRITEMOVEDATA_FOLLOWNOTEXACT
+		0, // SPRITEMOVEDATA_SHADOW
+		0, // SPRITEMOVEDATA_EMOTE
+		0, // SPRITEMOVEDATA_SCREENSHAKE
+		0, // SPRITEMOVEDATA_SPINCOUNTERCLOCKWISE
+		0, // SPRITEMOVEDATA_SPINCLOCKWISE
 		function (npc) {
 			if (npc.sprite === 'SPRITE_BIG_SNORLAX') return 23
 			if (npc.sprite === 'SPRITE_BIG_LAPRAS') return 23
 			return 22
-		}, // big doll
-		0, // boulder dust
-		0, // grass
-		0, // lapras
-		0,
+		}, // SPRITEMOVEDATA_BIGDOLL
+		0, // SPRITEMOVEDATA_BOULDERDUST
+		0, // SPRITEMOVEDATA_GRASS
+		0, // SPRITEMOVEDATA_SWIM_AROUND
+		0, // SPRITEMOVEDATA_SWIM_UP_DOWN
+		0, // SPRITEMOVEDATA_SWIM_LEFT_RIGHT
 	],
 
 }
@@ -198,12 +190,13 @@ config.loadNpcGraphics = function (npc) {
 		var color = npc.color
 		if (typeof color === 'string') {
 			color = npc.color.match(/PAL_OW_([A-Z]*)/)[1]
-			color = ['red', 'blue', 'green', 'brown', 'pink', 'silver', 'tree', 'rock'].indexOf(color.toLowerCase())
+			color = ['red', 'blue', 'green', 'brown', 'purple', 'silver', 'tree', 'rock'].indexOf(color.toLowerCase())
 			if (color === -1) {
 				color = 0
 			}
 		} else {
-			// TODO default color
+			// TODO correct default color
+			color = 0
 		}
 		var palette = [palettes[color]]
 		palette[0][0][3] = 0

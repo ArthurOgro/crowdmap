@@ -2180,9 +2180,6 @@ var drawMetatile = function (props) {
 	for (var y = 0; y < props.meta_h; y++) {
 	for (var x = 0; x < props.meta_w; x++) {
 		var cur_tile = metatile[x + row_index]
-		if (cur_tile >= 0x80) {
-			cur_tile -= 0x20
-		}
 		if (cur_tile >= tiles.length) {
 			cur_tile = 0
 		}
@@ -2399,7 +2396,7 @@ function loadPalmap(id) {
 		return deserializePalmap(data)
 	}, function () {
 		return [].concat(
-			new Array(0x60).fill(0),
+			new Array(0x80).fill(0),
 			new Array(0x80).fill(8)
 		)
 	})
@@ -2612,7 +2609,7 @@ function colorizeTiles(img, palette, palmap) {
 		y2 = y1 + 8
 
 		if (palmap) {
-			var i = palmap[tile >= 0x60 ? tile + 0x20 : tile]
+			var i = palmap[tile]
 			pal = palette[i & 7]
 		} else {
 			pal = palette[0]

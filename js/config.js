@@ -14,16 +14,18 @@ var config = {
 	map_constants_path: root + 'constants/map_constants.asm',
 	map_dimensions_path: root + 'constants/map_constants.asm',
 
-	roofs: [ -1, 3, 2, -1, 1, 2, -1, -1, 2, 2, 1, 4, -1, -1, -1, -1, -1, -1, -1, 0, -1, -1, 3, -1, 0, -1, 0 ],
-	//roof_permissions: [ 1, 'TOWN', 2, 'ROUTE', 4, 'CAVE' ], // wrong, see roof_tilesets
+	roofs: [ -1, 3, 2, -1, 1, 2, -1, -1, 2, 2, 1, 4, -1, -1, -1, -1, -1, -1, -1, -1, 5, -1, 3, -1, 0, -1, 0, -1, -1, 3, 6, -1, -1, -1, -1 ],
 	roof_tilesets: [
 		1, 'TILESET_JOHTO_1',
 		2, 'TILESET_JOHTO_2',
-		4, 'TILESET_BATTLE_TOWER_OUTSIDE',
 	],
-	roof_start: 0xa,
+	roof_start: 0x0a,
 
 	max_blocks: 1300,
+
+	tileset_names: [ 0, 'johto1', 'johto2', 'kanto1', 'johto3', 'house1', 'house2', 'pokecenter', 'gate', 'port', 'lab', 'facility', 'mart', 'mansion', 'game_corner', 'gym1', 'house3', 'gym2', 'gym3', 'lighthouse', 'kanto2', 'pokecom', 'battle_tower', 'tower', 'cave', 'park', 'ruins', 'radio_tower', 'warehouse', 'ice_path', 'forest', 'safari', 'alph', 'pokemon_mansion', 'faraway', 'tunnel', 'decor', 'shamouti', 'museum', 'hotel', 'quiet_cave', 'valencia'], 
+
+	sprite_names: [ 0, 'chris', 'chris_bike', 'chris_surf', 'kris', 'kris_bike', 'kris_surf', 'mom', 'dad', 'lyra', 'silver', 'falkner', 'bugsy', 'whitney', 'morty', 'chuck', 'jasmine', 'pryce', 'clair', 'will', 'koga', 'bruno', 'karen', 'lance', 'brock', 'misty', 'surge', 'erika', 'janine', 'sabrina', 'blaine', 'blue', 'red', 'leaf', 'yellow', 'oak', 'elm', 'ivy', 'westwood', 'willow', 'andy', 'bill', 'eusine', 'kurt', 'reds_mom', 'daisy', 'lorelei', 'agatha', 'palmer', 'walker', 'imakuni', 'lawrence', 'james', 'jessie', 'proton', 'petrel', 'archer', 'ariana', 'giovanni', 'cheryl', 'riley', 'buck', 'marley', 'mira', 'anabel', 'flannery', 'maylene', 'skyla', 'valerie', 'kukui', 'caitlin', 'darach', 'steven', 'cynthia', 'candela', 'blanche', 'spark', 'buena', 'captain', 'mary', 'matsumoto', 'artist', 'baker', 'beauty', 'biker', 'black_belt', 'boarder', 'breeder', 'bug_catcher', 'bug_maniac', 'child', 'cooltrainer_f', 'cooltrainer_m', 'cosplayer', 'cowgirl', 'dragon_tamer', 'elder', 'engineer', 'fisher', 'gentleman', 'gramps', 'granny', 'hex_maniac', 'kimono_girl', 'lady', 'lass', 'nurse', 'officer', 'officer_f', 'pharmacist', 'pi', 'pokefan_f', 'pokefan_m', 'rich_boy', 'rocker', 'rocket', 'rocket_girl', 'roughneck', 'sage', 'sailor', 'scientist', 'sightseer_m', 'skier', 'super_nerd', 'swimmer_f', 'swimmer_m', 'teacher', 'twin', 'veteran_m', 'veteran_f', 'youngster', 'bowing_nurse', 'clerk', 'receptionist', 'link_receptionist', 'gym_guy', 'fishing_guru', 'gameboy_kid', 'silph_employee', 'swimming_officer', 'swimming_officer_f', 'clefairy', 'farfetch_d', 'lapras', 'eevee', 'dragonite', 'mew', 'celebi', 'surf_pikachu', 'armored_mewtwo', 'big_snorlax', 'big_lapras', 'big_onix', 'weird_tree', 'gyarados_top_left', 'gyarados_top_right', 'gyarados_bottom_left', 'gyarados_bottom_right', 'ball_cut_fruit', 'boulder_rock_fossil', 'paper_unown_w', 'pokedex_unown_a', 'book_unown_r', 'sign_unown_p', 'electric_fence_left', 'electric_fence_right', 'snes', 'n64', 'gamecube', 'wii', 'silver_trophy', 'gold_trophy' ],
 
 	getTilesetConstants: function () {
 		return request(root + 'constants/tilemap_constants.asm')
@@ -48,15 +50,14 @@ var config = {
 	getTilesetImagePath: function (id) {
 		return this.getTilesetId(id)
 		.then(function (i) {
-			return root + 'gfx/tilesets/' + zfill(i, 2) + '.png'
+			var name = config.tileset_names[i]
+			return root + 'gfx/tilesets/' + name + '.png'
 		})
 	},
 
 	getBlockdataPath: function (name) {
 		var filenames = [
-			'maps/blockdata_1.asm',
-			'maps/blockdata_2.asm',
-			'maps/blockdata_3.asm',
+			'maps/block_data.asm',
 			'maps.asm', // newMap() dumps blockdata here
 		]
 		return Promise.all(filenames.map(function (filename) {
@@ -87,13 +88,15 @@ var config = {
 	getMetatilePath: function (id) {
 		return this.getTilesetId(id)
 		.then(function (i) {
-			return root + 'tilesets/' + zfill(i, 2) + '_metatiles.bin'
+			var name = config.tileset_names[i]
+			return root + 'tilesets/' + name + '_metatiles.bin'
 		})
 	},
 	getPalmapPath: function (id) {
 		return this.getTilesetId(id)
 		.then(function (i) {
-			return root + 'tilesets/' + zfill(i, 2) + '_palette_map.asm'
+			var name = config.tileset_names[i]
+			return root + 'tilesets/' + name + '_palette_map.asm'
 		})
 	},
 	getPalettePath: function () { return root + 'tilesets/bg.pal' },
@@ -128,48 +131,42 @@ var config = {
 
 	// not hardcoding these means reading code
 	movement_facings: [
-		0,
-		0, // standing
-		0, // random_walk_xy
-		0, // slow random spin
-		0, // random walk y
-		0, // random walk x
-		0, // standing down
-		4, // standing up
-		8, // standing left
-		12, // standing right
-		0, // fast random spin
-		0, // obey dpad (player)
-		0, // 8 unknown
-		0, // 9 unknown
-		0, // a unknown
-		0, // b unknown
-		0, // c unknown
-		0, // d unknown
-		0, // e unknown
-		0, // follow
-		0, // scripted?
-		23, // snorlax
-		0, // bounce?
-		0, // standing // sudowoodo
-		0, // standing // rock
-		0, // boulder
-		0, // follownotexact
-		0, // shadow
-		0, // emote
-		0,
-		0,
-		0,
-		22,
+		0, // SPRITEMOVEDATA_00
+		0, // SPRITEMOVEDATA_DOLL
+		0, // SPRITEMOVEDATA_WANDER
+		0, // SPRITEMOVEDATA_SPINRANDOM_SLOW
+		0, // SPRITEMOVEDATA_WALK_UP_DOWN
+		0, // SPRITEMOVEDATA_WALK_LEFT_RIGHT
+		0, // SPRITEMOVEDATA_STANDING_DOWN
+		4, // SPRITEMOVEDATA_STANDING_DOWN
+		8, // SPRITEMOVEDATA_STANDING_LEFT
+		12, // standing SPRITEMOVEDATA_STANDING_RIGHT
+		0, // SPRITEMOVEDATA_SPINRANDOM_FAST
+		0, // SPRITEMOVEDATA_PLAYER
+		0, // SPRITEMOVEDATA_CUTTABLE_TREE
+		0, // SPRITEMOVEDATA_FOLLOWING
+		0, // SPRITEMOVEDATA_SCRIPTED
+		23, // SPRITEMOVEDATA_SNORLAX
+		0, // SPRITEMOVEDATA_POKEMON
+		0, // SPRITEMOVEDATA_SUDOWOODO
+		0, // SPRITEMOVEDATA_SMASHABLE_ROCK
+		0, // SPRITEMOVEDATA_STRENGTH_BOULDER
+		0, // SPRITEMOVEDATA_FOLLOWNOTEXACT
+		0, // SPRITEMOVEDATA_SHADOW
+		0, // SPRITEMOVEDATA_EMOTE
+		0, // SPRITEMOVEDATA_SCREENSHAKE
+		0, // SPRITEMOVEDATA_SPINCOUNTERCLOCKWISE
+		0, // SPRITEMOVEDATA_SPINCLOCKWISE
 		function (npc) {
 			if (npc.sprite === 'SPRITE_BIG_SNORLAX') return 23
 			if (npc.sprite === 'SPRITE_BIG_LAPRAS') return 23
 			return 22
-		}, // big doll
-		0, // boulder dust
-		0, // grass
-		0, // lapras
-		0,
+		}, // SPRITEMOVEDATA_BIGDOLL
+		0, // SPRITEMOVEDATA_BIGDOLL
+		0, // SPRITEMOVEDATA_GRASS
+		0, // SPRITEMOVEDATA_SWIM_AROUND
+		0, // SPRITEMOVEDATA_SWIM_UP_DOWN
+		0, // SPRITEMOVEDATA_SWIM_LEFT_RIGHT
 	],
 
 }
@@ -198,12 +195,13 @@ config.loadNpcGraphics = function (npc) {
 		var color = npc.color
 		if (typeof color === 'string') {
 			color = npc.color.match(/PAL_OW_([A-Z]*)/)[1]
-			color = ['red', 'blue', 'green', 'brown', 'pink', 'silver', 'tree', 'rock'].indexOf(color.toLowerCase())
+			color = ['red', 'blue', 'green', 'brown', 'purple', 'silver', 'tree', 'rock'].indexOf(color.toLowerCase())
 			if (color === -1) {
 				color = 0
 			}
 		} else {
-			// TODO default color
+			// TODO correct default color
+			color = 0
 		}
 		var palette = [palettes[color]]
 		palette[0][0][3] = 0
@@ -499,14 +497,12 @@ function parseFacings(text) {
 config.getSpritePath = function (constant) {
 	return getSpriteConstants()
 	.then(function (constants) {
-		var sprite_id = constants[constant] - 1
-		if (sprite_id < 0) {
+		var sprite_id = constants[constant]
+		if (sprite_id < 0 || sprite_id >= config.sprite_names.length) {
 			sprite_id = 0
 		}
-		if (sprite_id > 102) {
-			sprite_id = 0
-		}
-		return root + 'gfx/overworld/' + sprite_id.toString().zfill(3) + '.png'
+		var name = config.sprite_names[sprite_id]
+		return root + 'gfx/overworld/' + name + '.png'
 	})
 }
 
@@ -782,8 +778,9 @@ function readMapHeader2 (text, name) {
 
 	header.connections = {}
 	connections.forEach(function (values) {
-		var names = ['direction', 'map', 'name', 'align', 'offset', 'strip_length', 'current_map']
+		var names = ['direction', 'map', 'name', 'align', 'offset', 'strip_length']
 		var connection = dictzip(names, values)
+		connection.current_map = header.name
 		header.connections[connection.direction] = connection
 	})
 

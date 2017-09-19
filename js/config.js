@@ -14,7 +14,7 @@ var config = {
 	map_constants_path: root + 'constants/map_constants.asm',
 	map_dimensions_path: root + 'constants/map_constants.asm',
 
-	roofs: [ -1, 4, 2, 0, 3, 4, -1, -1, 2, 2, 1, 0, 0 ],
+	roofs: [ -1, 4, -1, 0, 3, 4, -1, -1, -1, -1, -1, 0, 3 ],
 	roof_tilesets: [
 		1, 'TILESET_JOHTO_1',
 		2, 'TILESET_JOHTO_2',

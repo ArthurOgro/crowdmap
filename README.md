@@ -1,13 +1,15 @@
 # crowdmap
 
-A map editor for [pokecrystal].
+A map editor for [Pokémon Orange](https://github.com/PiaCarrot/pokeorange).
 
-Clone inside your pokecrystal repo. 
+Clone inside your pokeorange repo. 
+
+Convert map-related graphics to PNG:
+
+    ./gfx.py png gfx/tilesets/*.2bpp.lz gfx/tilesets/roofs/*.2bpp gfx/overworld/*.2bpp
 
 To start the editor, run `python crowdmap/server.py`. It will give you a link to open in your browser (usually [http://127.0.0.1:8000/crowdmap](http://127.0.0.1:8000/crowdmap)).
 
 ## Browser
 
 Use Chrome. Firefox has caching issues.
-
-[pokecrystal]: https://github.com/pret/pokecrystal

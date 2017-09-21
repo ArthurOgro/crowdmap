@@ -4,12 +4,7 @@
 
 .Callbacks: db 0
 
-.Scripts:
-
-.Text:
-
-
-{label}_MapEventHeader:: db 0, 0
+{label}_MapEventHeader::
 
 .Warps: db 0
 

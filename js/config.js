@@ -792,7 +792,7 @@ function serializeMapEvents (events) {
 			text += '\t' + macro_name + ' ' + arg_names.map(function (key) { return npc[key] }).join(', ') + '\n'
 		}
 	}
-	text += '_MapEventHeader:: db 0, 0\n'
+	text += '_MapEventHeader::\n'
 	text += '\n.Warps: db ' + events.warps.length + '\n'
 	events.warps.forEach(serialize('warp'));
 	text += '\n.CoordEvents: db ' + events.traps.length + '\n'

@@ -1,3 +1,5 @@
+const_value set 1
+
 {label}_MapScriptHeader::
 
 .MapTriggers: db 0
